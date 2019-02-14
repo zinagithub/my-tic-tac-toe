@@ -1,5 +1,6 @@
 def cls
   system('cls')
+  system "clear"
 end
 
 def get_input(msg)
