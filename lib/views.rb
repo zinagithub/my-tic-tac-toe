@@ -13,7 +13,7 @@ def greeting(player1,player2,score_p1,score_p2)
 	    2.times { print "\n"}
 	    print "\n"
         puts "           Welcome #{player1} and #{player2} "
-        puts "           #{player1} Score = #{score_p1}   #{player2} Score = #{score_p2}"
+        puts "         #{player1} Score = #{score_p1}   #{player2} Score = #{score_p2}"
         print "\n"
 end	
 

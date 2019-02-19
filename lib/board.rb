@@ -1,67 +1,69 @@
 class Board
-	attr_accessor :matrix, :winCombin
-	def initialize(turn)
-		@matrix    = ["","","","","","","","",""]
-		@winCombin = [[0,1,2],[3,4,5],[6,7,8],
-	                 [0,3,6],[1,4,7],[2,5,8],
-	                 [0,4,8],[2,4,6]] 
-        turn = @turn                        
+	attr_accessor :matrix, :winCombin, :dim
+	def initialize(dim)
+        @dim        = dim
+        @matrix     = Array.new(dim*dim)
+        @winCombin =  []
 	end
+    def init_combin(dim)
 
+        @winCombin  += Array.new(dim ){|l| Array.new(dim){|i| dim * l + i }}  
+        @winCombin  += Array.new(dim){|l| Array.new(dim){|i|  l + (i*dim)}}
+        @winCombin  += Array.new(1){|l| Array.new(dim){|i|  i+ (i*dim)}}
+        @winCombin  += Array.new(1){|l| Array.new(dim){|i|  i*(dim-1) + (dim-1)}}                      
+
+    end    
 	def change_mat(index, symbol)
-        if @matrix[index] == ""
-                @matrix[index] = symbol
-            return true
-        end
-        return false            
+        #@matrix[index] = symbol unless @matrix[index] == nil
+         if @matrix[index] == nil
+                 @matrix[index] = symbol
+             return true
+         end
+         return false            
     end
 	
+   def check_winner(symbol)
+      @winCombin.each do  |item|
+         if  item.all?{|val| @matrix[val] == symbol}
+             return true
+         end                      
+      end
+      return false
+   end 
 
-	def check_winner(symbol)
-
-        def generateArr(item,symbol)
-    		arr = []
-    		item.each do |val|
-    			if @matrix[val] == symbol
-    			   arr.push(val)
-    		    end
-    		end	
-
-    		return arr	
-    	end
-         
-		@winCombin.each do  |item|
-        		if item == generateArr(item,symbol)
-                     return bool = true 
-        		end	        	
-        	end
-        bool = false	
-	end	
 
 	def draw?
-        for i in 0..8
-            if @matrix[i] ==""
-                return false
-            end 
-        end 
-        return true
+        !@matrix.any?{|i| i == nil}
     end	
 
-
-    def val(cell)
-        if cell == ""
-            return "-"
-        end    
-        return cell    
-    end    
-    def print_mat
+    
+    def print_board(dim)
         cls
-        5.times { print "\n"}
-        print "                  #{val(@matrix[0])} | #{val(@matrix[1])} | #{val(@matrix[2])}\n"
-        print "                  #{val(@matrix[3])} | #{val(@matrix[4])} | #{val(@matrix[5])}\n"
-        print "                  #{val(@matrix[6])} | #{val(@matrix[7])} | #{val(@matrix[8])}\n"
-    	5.times { print "\n"}    
-    end	
-
+        print "\n"
+        counter = 0
+        @matrix.each do |val|
+            print "|" if counter == 0
+            
+            if val
+                print " #{val} "
+            else
+                print " - "
+            end
+            counter+=1
+            if counter == dim
+                counter = 0
+                print "|\n"     
+            end
+        end 
+        print "\n"
+    end
 	
 end
+
+ # board = Board.new(5)
+ # print "Matrix :"
+ # print board.matrix
+ # print "\n"
+ # board.init_combin(5)
+ # print "combin : "
+ # print board.winCombin

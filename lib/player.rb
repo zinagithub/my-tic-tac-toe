@@ -11,4 +11,4 @@ class Player
    
 end
 
-#p1 = Player.new("aze","x")
+
