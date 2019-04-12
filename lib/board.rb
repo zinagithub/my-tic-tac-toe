@@ -1,25 +1,19 @@
 class Board
 	attr_accessor :matrix, :winCombin, :dim
-	def initialize(dim)
+	def initialize(dim=3)
         @dim        = dim
         @matrix     = Array.new(dim*dim)
-        @winCombin =  []
+        @winCombin  =   Array.new(dim ){|l| Array.new(dim){|i| dim * l + i }}+
+        Array.new(dim){|l| Array.new(dim){|i|  l + (i*dim)}}+Array.new(1){|l| Array.new(dim){|i|  i+ (i*dim)}}+
+        Array.new(1){|l| Array.new(dim){|i|  i*(dim-1) + (dim-1)}}
 	end
-    def init_combin(dim)
-
-        @winCombin  += Array.new(dim ){|l| Array.new(dim){|i| dim * l + i }}  
-        @winCombin  += Array.new(dim){|l| Array.new(dim){|i|  l + (i*dim)}}
-        @winCombin  += Array.new(1){|l| Array.new(dim){|i|  i+ (i*dim)}}
-        @winCombin  += Array.new(1){|l| Array.new(dim){|i|  i*(dim-1) + (dim-1)}}                      
-
-    end    
+    
 	def change_mat(index, symbol)
-        #@matrix[index] = symbol unless @matrix[index] == nil
-         if @matrix[index] == nil
-                 @matrix[index] = symbol
-             return true
-         end
-         return false            
+          if @matrix[index] == nil
+            @matrix[index] = symbol
+            return true
+          end
+          return false            
     end
 	
    def check_winner(symbol)
@@ -60,10 +54,5 @@ class Board
 	
 end
 
- # board = Board.new(5)
- # print "Matrix :"
- # print board.matrix
- # print "\n"
- # board.init_combin(5)
- # print "combin : "
- # print board.winCombin
+#b= Board.new(5)
+#print "hi #{b.winCombin}"
