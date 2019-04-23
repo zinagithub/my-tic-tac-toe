@@ -11,12 +11,11 @@ def get_input(msg)
 	output = gets.chomp
 end	
 
-def score(player1,player2,score_p1,score_p2)
+def score(player1,player2,score_p1,score_p2,nb_draw)
 	    cls
 	    2.times { print "\n"}
 	    print "\n"
-        puts "           Welcome #{player1} and #{player2} "
-        puts "         #{player1} Score = #{score_p1}   #{player2} Score = #{score_p2}"
+        puts "         #{player1} Score = #{score_p1}   #{player2} Score = #{score_p2} Draw = #{nb_draw}"
         print "\n"
 end	
 
@@ -30,31 +29,35 @@ def menu
 		puts '__________________________________________________________'
         print "\n"
 end
-
-def new_game(g) 
+def print_winner(game,dim,turn)
+	game.board.print_board(dim)
+    puts "Player#{turn} you won !"
+    game.score[turn.to_i  - 1] += 1
+end	
+def new_game(game) 
   while true do
-    g.b.print_board(g.b.dim)
-    t = g.turn == "x" ? "1" : "2"
-    puts "Player#{t} choose a number in 0 - #{g.b.dim*g.b.dim - 1} or Q to quit!"   
+  	dim = Board::DIM
+    game.board.print_board(dim)
+    t = game.turn == "x" ? "1" : "2"   
+    puts "Player#{t} choose a number in 0 - #{dim*dim -1}  or Q to quit!"   
     cell = gets.chomp
     if cell.upcase == "Q"
        puts "Quit"
        break
-    elsif g.b.change_mat(cell.to_i,g.turn)
-        if g.b.check_winner(g.turn)
-          g.b.print_board(g.b.dim)
-          puts "Player#{t} you won !"
-          g.score[t.to_i  - 1] += 1
+    elsif game.board.change_mat(cell.to_i,game.turn)
+        if game.board.check_winner(game.turn)
+          print_winner(game,dim,t)
           break
-        elsif g.b.draw? 
+        elsif game.board.draw? 
           puts "its a draw"
+          game.score[2] += 1
           break
         end 
-        g.turn = g.switch_turn(g.turn)      
+        game.turn = game.switch_turn(game.turn)      
     end     
   end   
 end  
-
+#===================================================================================
 ch = ""
 cls
 while ch != "Q"
@@ -62,19 +65,19 @@ while ch != "Q"
     ch = get_input("Your Choice : ").upcase
     case
       when ch == "S"        
-        g   = Game.new
-        g.b = Board.new
-        new_game(g)
+        game   = Game.new
+        game.board = Board.new
+        new_game(game)
       when ch == "C"
-        if g != nil
-         score("player1","player2",g.score[0],g.score[1])
+        if game != nil
+         score("player1","player2",game.score[0],game.score[1],game.score[2])
         else
          score("player1","player2",0,0)
         end 
       when ch == "R"
-          if g != nil 
-            g.b.matrix  = Array.new(g.b.dim*g.b.dim) 
-            new_game(g)
+          if game != nil 
+            game.board.matrix  = Array.new(Board::DIM*Board::DIM) 
+            new_game(game)
           end  
     end 
 end

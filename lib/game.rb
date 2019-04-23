@@ -1,7 +1,7 @@
     class Game 
-    attr_accessor  :score , :b , :turn
+    attr_accessor  :score , :board , :turn
     def initialize(turn="x")
-      @b = nil
+      @board = nil
       @turn = turn
       @score  = [0,0,0] # cell1 the number player1 win, cell2 player2 win , cell3 number draw
     end 
