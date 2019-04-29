@@ -36,7 +36,7 @@ def print_winner(game,dim,turn)
 end	
 def new_game(game) 
   while true do
-  	dim = Board::DIM
+  	dim = game.size_board
     game.board.print_board(dim)
     t = game.turn == "x" ? "1" : "2"   
     puts "Player#{t} choose a number in 0 - #{dim*dim -1}  or Q to quit!"   
@@ -49,6 +49,7 @@ def new_game(game)
           print_winner(game,dim,t)
           break
         elsif game.board.draw? 
+          game.board.print_board(dim)	
           puts "its a draw"
           game.score[2] += 1
           break
@@ -64,9 +65,10 @@ while ch != "Q"
     menu
     ch = get_input("Your Choice : ").upcase
     case
-      when ch == "S"        
-        game   = Game.new
-        game.board = Board.new
+      when ch == "S"  
+        size = 0     
+        size = get_input("Enter the size of the board in [3..10]: ") until size.to_i >=3 && size.to_i <= 10      
+        game   = Game.new(size.to_i)
         new_game(game)
       when ch == "C"
         if game != nil
@@ -76,7 +78,7 @@ while ch != "Q"
         end 
       when ch == "R"
           if game != nil 
-            game.board.matrix  = Array.new(Board::DIM*Board::DIM) 
+            game.board.matrix  = Array.new(game.size_board*game.size_board)
             new_game(game)
           end  
     end 

@@ -1,13 +1,14 @@
 class Board
-    DIM = 5
-	attr_accessor :matrix , :winCombin 
-        def initialize
-        @matrix     = Array.new(DIM*DIM)
-        @winCombin = generate_row_combination(DIM) + 
-                     generate_column_combination(DIM) + 
-                     generate_diagonal_combination(DIM)
+    #DIM = 3
+	attr_accessor :matrix , :winCombin, :dim 
+        def initialize(dim)  
+        @dim = dim  
+        @matrix     = Array.new(dim*dim)
+        @winCombin = generate_row_combination(dim) + 
+                     generate_column_combination(dim) + 
+                     generate_diagonal_combination(dim)
         
-	end
+	   end
     
     def generate_row_combination(dim)
         return Array.new(dim ){|l| Array.new(dim){|i| dim * l + i }}
