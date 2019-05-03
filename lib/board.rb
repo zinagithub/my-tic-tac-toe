@@ -41,11 +41,11 @@ end
 def print_board(dim)
     cls
     @matrix.each_slice(dim) { |a| a.each {|i| 
-                        unless i.nil? 
+                        if !i.nil?
                             print " #{i} "
-                        else
-                            print " - "
-                        end  
+                        else    
+                            print " - " 
+                        end     
                         }
                         print "\n"}
 
