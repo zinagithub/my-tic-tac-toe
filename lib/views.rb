@@ -34,7 +34,7 @@ def print_winner(game,dim,turn)
     puts "Player#{turn} you won !"
     game.score[turn.to_i  - 1] += 1
 end	
-def when_change_mat(game,nbr)
+def draw_or_win(game,nbr)
 	if game.board.check_winner(game.turn)
           print_winner(game,game.size_board,nbr)
           return true
@@ -46,10 +46,10 @@ def when_change_mat(game,nbr)
     end 
     false
 end	
+
 def new_game(game) 
-	
+  dim = game.size_board	
   while true  do
-  	dim = game.size_board
     game.board.print_board(dim)
     t = game.turn == "x" ? "1" : "2"   
     puts "Player#{t} choose a number in 0 - #{dim*dim -1}  or Q to quit!"   
@@ -58,8 +58,7 @@ def new_game(game)
        puts "Quit"
        break
     elsif game.board.change_mat(cell.to_i,game.turn) 
-        break if when_change_mat(game,t)
-        
+        break if draw_or_win(game,t)
         game.turn = game.switch_turn(game.turn)      
     end     
   end   

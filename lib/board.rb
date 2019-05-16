@@ -1,6 +1,6 @@
-class Board
-    #DIM = 3
-	attr_accessor :matrix , :winCombin, :dim 
+class Board   
+    attr_accessor :matrix 
+    attr_reader :winCombin, :dim
         def initialize(dim)  
         @dim = dim  
         @matrix     = Array.new(dim*dim)
@@ -35,7 +35,8 @@ def check_winner(symbol)
     false
 end    
 	def draw?
-        !@matrix.any?{|i| i == nil}
+        #!@matrix.any?{|i| i == nil}
+        @matrix.none?(&:nil?)
     end	
 
 def print_board(dim)
