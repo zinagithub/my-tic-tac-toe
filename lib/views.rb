@@ -46,8 +46,26 @@ def draw_or_win(game,nbr)
     end 
     false
 end	
+def new_game(game)
+	dim = game.size_board
+    while true do
+      game.board.print_board(dim)
+      t = game.turn == "x" ? "1" : "2"                 
+      begin
+      	cell = get_player_input(t,dim)	
+      end until game.board.change_mat(cell.to_i, game.turn)	|| cell.upcase == "Q"      
+      break if draw_or_win(game,t) || cell.upcase == "Q"
+      game.turn = game.switch_turn(game.turn)
+    end  
+end
 
-def new_game(game) 
+def get_player_input(player_number,dim)
+    puts "Player#{player_number} choose a number in 0 - #{dim * dim - 1}  or Q to quit!"
+    cell = gets.chomp
+end
+
+
+def new_game1(game) 
   dim = game.size_board	
   while true  do
     game.board.print_board(dim)
