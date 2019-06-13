@@ -1,69 +1,54 @@
-class Board
-	attr_accessor :matrix, :winCombin, :dim
-	def initialize(dim)
-        @dim        = dim
+class Board   
+    attr_accessor :matrix 
+    attr_reader :winCombin, :dim
+        def initialize(dim)  
+        @dim = dim  
         @matrix     = Array.new(dim*dim)
-        @winCombin =  []
-	end
-    def init_combin(dim)
+        @winCombin = generate_row_combination(dim) + 
+                     generate_column_combination(dim) + 
+                     generate_diagonal_combination(dim)
+        
+	   end
+    
+    def generate_row_combination(dim)
+        return Array.new(dim ){|l| Array.new(dim){|i| dim * l + i }}
+    end  
 
-        @winCombin  += Array.new(dim ){|l| Array.new(dim){|i| dim * l + i }}  
-        @winCombin  += Array.new(dim){|l| Array.new(dim){|i|  l + (i*dim)}}
-        @winCombin  += Array.new(1){|l| Array.new(dim){|i|  i+ (i*dim)}}
-        @winCombin  += Array.new(1){|l| Array.new(dim){|i|  i*(dim-1) + (dim-1)}}                      
-
-    end    
-	def change_mat(index, symbol)
-        #@matrix[index] = symbol unless @matrix[index] == nil
-         if @matrix[index] == nil
-                 @matrix[index] = symbol
-             return true
-         end
-         return false            
+    def generate_column_combination(dim) 
+        return Array.new(dim){|l| Array.new(dim){|i|  l + (i*dim)}}
     end
-	
-   def check_winner(symbol)
-      @winCombin.each do  |item|
-         if  item.all?{|val| @matrix[val] == symbol}
-             return true
-         end                      
-      end
-      return false
-   end 
 
+    def generate_diagonal_combination(dim) 
+        return Array.new(1){|l| Array.new(dim){|i|  i+ (i*dim)}}+
+               Array.new(1){|l| Array.new(dim){|i|  i*(dim-1) + (dim-1)}}
+    end
+    
 
+    def change_mat(index,symbol)
+        return false unless @matrix[index].nil?
+        @matrix[index] = symbol
+        return true
+    end
+
+def check_winner(symbol)
+    return true if @winCombin.any? {|combin| combin.all?{|i| @matrix[i] == symbol}}
+    false
+end    
 	def draw?
-        !@matrix.any?{|i| i == nil}
+        #!@matrix.any?{|i| i == nil}
+        @matrix.none?(&:nil?)
     end	
 
-    
-    def print_board(dim)
-        cls
-        print "\n"
-        counter = 0
-        @matrix.each do |val|
-            print "|" if counter == 0
-            
-            if val
-                print " #{val} "
-            else
-                print " - "
-            end
-            counter+=1
-            if counter == dim
-                counter = 0
-                print "|\n"     
-            end
-        end 
-        print "\n"
-    end
-	
-end
+def print_board(dim)
+    cls
+    @matrix.each_slice(dim) { |a| a.each {|i| 
+                        if !i.nil?
+                            print " #{i} "
+                        else    
+                            print " - " 
+                        end     
+                        }
+                        print "\n"}
 
- # board = Board.new(5)
- # print "Matrix :"
- # print board.matrix
- # print "\n"
- # board.init_combin(5)
- # print "combin : "
- # print board.winCombin
+end	
+end
