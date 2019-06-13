@@ -65,22 +65,7 @@ def get_player_input(player_number,dim)
 end
 
 
-def new_game1(game) 
-  dim = game.size_board	
-  while true  do
-    game.board.print_board(dim)
-    t = game.turn == "x" ? "1" : "2"   
-    puts "Player#{t} choose a number in 0 - #{dim*dim -1}  or Q to quit!"   
-    cell = gets.chomp
-    if cell.upcase == "Q"
-       puts "Quit"
-       break
-    elsif game.board.change_mat(cell.to_i,game.turn) 
-        break if draw_or_win(game,t)
-        game.turn = game.switch_turn(game.turn)      
-    end     
-  end   
-end  
+  
 #===================================================================================
 ch = ""
 cls
