@@ -1,5 +1,7 @@
 # Project Title : TIC-TAC-TOE Game
 
+Assignment : https://www.theodinproject.com/courses/ruby-programming/lessons/oop
+
 Build a tic-tac-toe game on the command line where two human players can play against each other and the board is displayed in between turns.
 Notes that you can choose the size of the board in the range [3..10]
 
