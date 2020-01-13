@@ -2,8 +2,8 @@
 
 Assignment : https://www.theodinproject.com/courses/ruby-programming/lessons/oop
 
-Build a tic-tac-toe game on the command line where two human players can play against each other and the board is displayed in between turns.
-Notes that you can choose the size of the board in the range [3..10]
+Build a tic-tac-toe game on the command line where two human players can play against each other and the board is displayed in between turns. I used Rspec framwork to test the correct functioning of the game.  
+Also, Notes that you can choose the size of the board in the range [3..10]
 
 ## Getting Started
 
@@ -15,7 +15,6 @@ Clone with SSH
 git clone git@github.com:zinagithub/my-tic-tac-toe.git
 ```
 Clone with HTTPS
-
 ```
 git clone https://github.com/zinagithub/my-tic-tac-toe.git
 
