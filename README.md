@@ -27,19 +27,18 @@ What things you need to install ?
 ```
 Ruby version 2.6.3
 ```
-```
 Rspec version 3.9
 ```
 
 
-### Installing
+## To Run the project :
 
 cd lib
 
 ruby views.rb
 
 
-## Running the tests
+## Running the tests :
 
 Run rspec from the directory root
 
